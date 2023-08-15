@@ -66,12 +66,12 @@ public class CategoriaProductoController : ControllerBase
     }
 
      [HttpPost]
-    [Route("EditCategoriaProducto")]
-    public IActionResult EditCategoriaProducto(CategoriaProducto categoriaProducto)
+    [Route("UpdateCategoriaProducto")]
+    public IActionResult UpdateCategoriaProducto(CategoriaProducto categoriaProducto)
     {
         try
         {
-            var result = CategoriaProductoServicios.UpdateCategoriaProducto(categoriaProducto);
+            var result = CategoriaProductoServicios.EditCategoriaProducto(categoriaProducto);
             return Ok("Categoria Actualizada con exito");
         }
         catch (Exception err)

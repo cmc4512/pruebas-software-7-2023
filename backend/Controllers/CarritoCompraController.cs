@@ -66,8 +66,8 @@ public class CarritoCompraController : ControllerBase
     }
 
    [HttpPost]
-    [Route("EditCarritoCompra")]
-    public IActionResult EditCarritoCompra(CarritoCompra carritoCompra)
+    [Route("UpdateCarritoCompra")]
+    public IActionResult UpdateCarritoCompra(CarritoCompra carritoCompra)
     {
         try
         {

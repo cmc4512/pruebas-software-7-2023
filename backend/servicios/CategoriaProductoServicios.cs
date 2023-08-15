@@ -37,7 +37,7 @@ namespace backend.servicios
             return result;
         }
 
-           public static int UpdateCategoriaProducto(CategoriaProducto categoriaProducto)
+           public static int EditCategoriaProducto(CategoriaProducto categoriaProducto)
         {
             var parameters = new DynamicParameters();
             parameters.Add("NOMBRE", categoriaProducto.Nombre, DbType.String);
