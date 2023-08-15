@@ -64,4 +64,34 @@ public class CarritoCompraController : ControllerBase
             return StatusCode(500, ex.Message);
         }
     }
+
+   [HttpPost]
+    [Route("EditCarritoCompra")]
+    public IActionResult EditCarritoCompra(CarritoCompra carritoCompra)
+    {
+        try
+        {
+            var result = CarritoCompraServicios.UpdateCarritoCompra(carritoCompra);
+            return Ok(result);
+        }
+        catch (Exception err)
+        {
+            return StatusCode(500, err.Message);
+        }
+    }
+    
+    [HttpPost]
+    [Route("EliminarCarritoCompra")]
+    public IActionResult EliminarCarritoCompra([FromQuery] int id)
+    {
+        try
+        {
+            CarritoCompraServicios.DeleteCarritoCompra(id);
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
+    }
 }

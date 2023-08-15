@@ -64,4 +64,33 @@ public class DetalleCarritoController : ControllerBase
             return StatusCode(500, ex.Message);
         }
     }
+  [HttpPost]
+    [Route("UpdateDetalleCarrito")]
+    public IActionResult EditDetalleCarrito(DetalleCarrito detalleCarrito)
+    {
+        try
+        {
+            var result = DetalleCarritoServicios.UpdateDetalleCarrito(detalleCarrito);
+            return Ok(result);
+        }
+        catch (Exception err)
+        {
+            return StatusCode(500, err.Message);
+        }
+    }
+
+    [HttpPost]
+    [Route("DeleteDetalleCarrito")]
+    public IActionResult DeleteDetalleCarrito([FromQuery] int id)
+    {
+        try
+        {
+            DetalleCarritoServicios.DeleteDetalleCarrito(id);
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
+    }
 }

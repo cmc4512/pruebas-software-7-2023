@@ -37,6 +37,20 @@ namespace backend.servicios
             var result = BDManager.GetInstance.SetData(sql, parameters);
             return result;
         }
+       public static int UpdateDetalleCarrito(DetalleCarrito detalleCarrito)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("CANTIDAD", detalleCarrito.Cantidad, DbType.String);
+            parameters.Add("ID", detalleCarrito.Id, DbType.Int64);
+            var result = BDManager.GetInstance.SetData("UPDATE DETALLE_CARRITO SET CANTIDAD=@CANTIDAD WHERE ID=@ID", parameters);
+            return result;
+        }
 
+        public static void DeleteDetalleCarrito(int id)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("id", id, DbType.Int64);
+            BDManager.GetInstance.SetData("UPDATE DETALLE_CARRITO SET ESTADO_REGISTRO=0 WHERE ID=@ID", parameters);
+        }
     }
 }
