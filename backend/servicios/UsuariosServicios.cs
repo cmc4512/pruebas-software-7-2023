@@ -53,5 +53,10 @@ namespace backend.servicios
             parameters.Add("id", id, DbType.Int64);
             BDManager.GetInstance.SetData("UPDATE USUARIOS SET ESTADO_REGISTRO=0 WHERE ID=@ID", parameters);
         }
+
+        public static object UpdateUsuarios(object usuarioTemp)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
