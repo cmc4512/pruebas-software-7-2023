@@ -20,9 +20,9 @@ export class Tab2Page {
   constructor() {
 
     let producto: Producto = new Producto();
-    producto.Producto = "Coca Cola"
-    producto.IdCategoria = "2"
-    producto.Usuario = "maicol"
+    producto.Producto = "computadora"
+    producto.IdCategoria = "1"
+    producto.Usuario = "jose"
     producto.Fecha = "12/02/2022"
     producto.Estado = "1"
    
