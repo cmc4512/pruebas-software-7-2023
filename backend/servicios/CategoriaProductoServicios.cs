@@ -10,7 +10,7 @@ namespace backend.servicios
     {
         public static IEnumerable<T> ObtenerTodo<T>()
         {
-            const string sql = "select * from categoria_producto";
+            const string sql = "select * from categoria_producto order by id desc";
             return BDManager.GetInstance.GetData<T>(sql);//Dapper
         }
 
@@ -52,5 +52,11 @@ namespace backend.servicios
             parameters.Add("id", id, DbType.Int64);
             BDManager.GetInstance.SetData("UPDATE CATEGORIA_PRODUCTO SET ESTADO_REGISTRO=0 WHERE ID=@ID", parameters);
         }
+
+        internal static object UpdateCategoriaProducto(CategoriaProducto categoriaProducto)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

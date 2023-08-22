@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers;
 
-
 [EnableCors("CorsDev")]
 [ApiController]
 [Route("api/[controller]")]
@@ -67,10 +66,9 @@ public class UsuariosController : ControllerBase
             return StatusCode(500, ex.Message);
         }
     }
-
- [HttpPost]
-    [Route("UpdateUser")]
-    public IActionResult UpdateUser(Usuarios usuario)
+      [HttpPost]
+    [Route("EditUser")]
+    public IActionResult EditUser(Usuarios usuario)
     {
         try
         {
@@ -84,13 +82,13 @@ public class UsuariosController : ControllerBase
     }
 
     [HttpPost]
-    [Route("DeleteUsuario")]
+    [Route("EliminarUsuario")]
     public IActionResult EliminarUsuario([FromQuery] int id)
     {
         try
         {
             UsuariosServicios.DeleteUsuario(id);
-            return Ok();
+            return Ok("Se dio de baja al usuario correctamente.");
         }
         catch (Exception ex)
         {

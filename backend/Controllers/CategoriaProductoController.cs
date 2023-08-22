@@ -1,10 +1,12 @@
 using backend.connection;
 using backend.entidades;
 using backend.servicios;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers;
 
+[EnableCors("CorsDev")]
 [ApiController]
 [Route("api/[controller]")]
 public class CategoriaProductoController : ControllerBase
@@ -64,14 +66,13 @@ public class CategoriaProductoController : ControllerBase
             return StatusCode(500, ex.Message);
         }
     }
-
      [HttpPost]
-    [Route("UpdateCategoriaProducto")]
-    public IActionResult UpdateCategoriaProducto(CategoriaProducto categoriaProducto)
+    [Route("EditCategoriaProducto")]
+    public IActionResult EditCategoriaProducto(CategoriaProducto categoriaProducto)
     {
         try
         {
-            var result = CategoriaProductoServicios.EditCategoriaProducto(categoriaProducto);
+            var result = CategoriaProductoServicios.UpdateCategoriaProducto(categoriaProducto);
             return Ok("Categoria Actualizada con exito");
         }
         catch (Exception err)
@@ -81,18 +82,17 @@ public class CategoriaProductoController : ControllerBase
     }
 
     [HttpPost]
-    [Route("DeleteCategoriaProducto")]
-    public IActionResult DeleteCategoriaProducto([FromQuery] int id)
+    [Route("eliminarCategoriaProducto")]
+    public IActionResult eliminarCategoriaProducto([FromQuery] int id)
     {
         try
         {
             CategoriaProductoServicios.DeleteCategoriaProducto(id);
-            return Ok();
+            return Ok("Se dio de baja a la categoria del producto correctamente.");
         }
         catch (Exception ex)
         {
             return StatusCode(500, ex.Message);
         }
     }
-    
 }

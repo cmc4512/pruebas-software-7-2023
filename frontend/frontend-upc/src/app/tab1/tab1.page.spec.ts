@@ -1,26 +1,80 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import { Component } from '@angular/core';
+import { Usuarios } from '../entidades/usuarios';
+import { UsuariosService } from '../servicios-backend/usuarios/usuarios.service';
+import { HttpResponse } from '@angular/common/http';
 
-import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
+@Component({
+  selector: 'app-tab1',
+  templateUrl: 'tab1.page.html',
+  styleUrls: ['tab1.page.scss']
+})
+export class Tab1Page {
 
-import { Tab1Page } from './tab1.page';
+  public nombreCompleto = ""
+  public userName = ""
+  public password = ""
 
-describe('Tab1Page', () => {
-  let component: Tab1Page;
-  let fixture: ComponentFixture<Tab1Page>;
+  public listaUsuarios: Usuarios[] = []
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [Tab1Page],
-      imports: [IonicModule.forRoot(), ExploreContainerComponentModule]
-    }).compileComponents();
+  constructor(private usuariosService: UsuariosService) {
+/*
+    let usuario: Usuarios = new Usuarios();
+    usuario.nombreCompleto = "Eddy Escalante"
+    usuario.userName = "eescalante"
+    usuario.password = "2023"
 
-    fixture = TestBed.createComponent(Tab1Page);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    this.listaUsuarios.push(usuario)
+    this.listaUsuarios.push(usuario)
+*/
+    this.getUsuariosFromBackend();
+  }
+
+  private getUsuariosFromBackend(){
+    this.usuariosService.GetUsuarios().subscribe({
+        next: (response: HttpResponse<any>) => {
+            this.listaUsuarios = response.body;
+            console.log(this.listaUsuarios)
+        },
+        error: (error: any) => {
+            console.log(error);
+        },
+        complete: () => {
+            //console.log('complete - this.getUsuarios()');
+        },
+    });
+  }
+
+  public addUsuario(){
+   this.AddUsuarioFromBackend(this.nombreCompleto, this.userName, this.password)
+  }
+
+  private AddUsuarioFromBackend(nombreCompleto: string, userName: string, password: string){
+
+    var usuarioEntidad = new Usuarios();
+    usuarioEntidad.nombreCompleto = nombreCompleto;
+    usuarioEntidad.userName = userName;
+    usuarioEntidad.password = password;
+
+    this.usuariosService.AddUsuario(usuarioEntidad).subscribe({
+      next: (response: HttpResponse<any>) => {
+          console.log(response.body)//1
+          if(response.body == 1){
+              alert("Se agrego el USUARIO con exito :)");
+              this.getUsuariosFromBackend();//Se actualize el listado
+              this.nombreCompleto = "";
+              this.userName = "";
+              this.password = "";
+          }else{
+              alert("Al agregar al USUARIO fallo exito :(");
+          }
+      },
+      error: (error: any) => {
+          console.log(error);
+      },
+      complete: () => {
+          //console.log('complete - this.AddUsuario()');
+      },
   });
+  }
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+}

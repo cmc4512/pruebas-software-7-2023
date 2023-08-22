@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { Producto } from '../entidades/producto';
+import { CategoriaProducto } from '../entidades/categoria-producto';
+import { CategoriaProductoService } from '../servicios-backend/categoria-producto/categoria-producto.service';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-tab2',
@@ -8,32 +10,56 @@ import { Producto } from '../entidades/producto';
 })
 export class Tab2Page {
 
-  public Producto = ""
-  public IdCategoria = ""
-  public password = ""
-  public Usuario = ""
-  public Fecha = ""
-  public Estado = ""
+  public nombre  = ""
+  public listaCategoria: CategoriaProducto[] = []
 
-  public listaProducto: Producto[] = []
-
-  constructor() {
-
-    let producto: Producto = new Producto();
-    producto.Producto = "computadora"
-    producto.IdCategoria = "1"
-    producto.Usuario = "jose"
-    producto.Fecha = "12/02/2022"
-    producto.Estado = "1"
-   
-    this.listaProducto.push(producto)
-    this.listaProducto.push(producto)
-
+  constructor(private categoriaProductoService: CategoriaProductoService) {
+    this.getCategoriaFromBackend();
   }
 
+  private getCategoriaFromBackend(){
+    this.categoriaProductoService.GetAll().subscribe({
+        next: (response: HttpResponse<any>) => {
+            this.listaCategoria = response.body;
+            console.log(this.listaCategoria)
+        },
+        error: (error: any) => {
+            console.log(error);
+        },
+        complete: () => {
+            //console.log('complete - this.getUsuarios()');
+        },
+    });
+  }
 
-  public addProducto(){
+  public addCategoria(){
+   this.AddCategoriaFromBackend(this.nombre)
+  }
 
+  private AddCategoriaFromBackend(nombre: string){
+
+    var usuarioEntidad = new CategoriaProducto();
+    usuarioEntidad.nombre = nombre;
+
+    this.categoriaProductoService.Add(usuarioEntidad).subscribe({
+      next: (response: HttpResponse<any>) => {
+          console.log(response.body)//1
+          if(response.body == 1){
+              alert("Se agrego la CATEGORIA con exito :)");
+              this.getCategoriaFromBackend();//Se actualize el listado
+              this.nombre = "";
+          }else{
+              alert("Al agregar la CATEGORIA fallo exito :(");
+          }
+      },
+      error: (error: any) => {
+          console.log(error);
+      },
+      complete: () => {
+          //console.log('complete - this.AddUsuario()');
+      },
+  });
   }
 
 }
+
