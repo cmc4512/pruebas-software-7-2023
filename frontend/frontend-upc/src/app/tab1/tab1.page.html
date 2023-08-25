@@ -14,10 +14,10 @@
   </ion-header>
 
 <ion-item>
-  <ion-input type="text" placeholder="Ingrese el Nombre Completo" [(ngModel)]="nombreCompleto"></ion-input>
-  <ion-input type="text" placeholder="Ingrese su User Name" [(ngModel)]="userName"></ion-input>
-  <ion-input type="text" placeholder="Ingrese la Contraseña" [(ngModel)]="password"></ion-input>
-  <ion-button (click)="addUsuario()">Agregar Usuario</ion-button>
+  <ion-input id="nombreCompleto" type="text" placeholder="Ingrese el Nombre Completo" [(ngModel)]="nombreCompleto"></ion-input>
+  <ion-input id="userName" type="text" placeholder="Ingrese su User Name" [(ngModel)]="userName"></ion-input>
+  <ion-input id="password" type="text" placeholder="Ingrese la Contraseña" [(ngModel)]="password"></ion-input>
+  <ion-button id="addUsuario" (click)="addUsuario()">Agregar Usuario</ion-button>
 </ion-item>
 <br>
 <ion-list>

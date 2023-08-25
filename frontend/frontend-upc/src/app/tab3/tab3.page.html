@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 3
+      Producto
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,9 +9,20 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large"></ion-title>
+      <ion-title size="large">Producto</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Tab 3 page"></app-explore-container>
+  <ion-item>
+    <ion-input id="nombreProducto" type='text' placeholder='Añadir nombre producto :*' [(ngModel)]="nombre"></ion-input>
+    <ion-input id="idCategoria" type='text' placeholder='Elegir id producto:*' [(ngModel)]="idCategoria"></ion-input>
+    <ion-button id="addProducto" (click)="addProducto()">Agregar Categoria</ion-button>
+  </ion-item>
+  <br>
+  <ion-list>
+    <ion-item *ngFor="let item of listaProductos">
+      <b>nombre</b>:{{item.nombre}}; <b>idCategoria</b>:{{item.idCategoria}}
+    </ion-item>
+  </ion-list>
+
 </ion-content>
