@@ -1,16 +1,17 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CarritoCompra } from 'src/app/entidades/carrito-compra';
+import { DetalleCarrito } from 'src/app/entidades/detalle-carrito';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CarritoCompraService {
+export class DetalleCarritoService {
+
   PATH_BACKEND = "http://localhost:" + "5159"
 
-  URL_GET = this.PATH_BACKEND + "/api/CarritoCompra/GetAllCarritoCompra";
-  URL_ADD_CARRITO = this.PATH_BACKEND + "/api/CarritoCompra/AddCarritoCompra";
+  URL_GET = this.PATH_BACKEND + "/api/DetalleCarrito/GetAllDetalleCarrito";
+  URL_ADD_DETALLE = this.PATH_BACKEND + "/api/DetalleCarrito/AddDetalleCarrito";
 
   constructor(private httpClient: HttpClient) {
   }
@@ -22,9 +23,9 @@ export class CarritoCompraService {
       .pipe();
   }
 
-  public Add(entidad: CarritoCompra): Observable<HttpResponse<any>> {
+  public Add(entidad: DetalleCarrito): Observable<HttpResponse<any>> {
     return this.httpClient
-      .post<any>(this.URL_ADD_CARRITO, entidad,
+      .post<any>(this.URL_ADD_DETALLE, entidad,
         { observe: 'response' })
       .pipe();
   }

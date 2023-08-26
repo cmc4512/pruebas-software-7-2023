@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Producto } from '../entidades/producto';
+import { Productos } from '../entidades/producto';
 import { HttpResponse } from '@angular/common/http';
 import { ProductoService } from '../servicios-backend/producto/producto.service';
 @Component({
@@ -9,62 +9,60 @@ import { ProductoService } from '../servicios-backend/producto/producto.service'
 })
 export class Tab3Page {
   public nombre = "";
-  public idCategoria = 0;
-  
-  public listaProductos: Producto[] = [];
-  
-  constructor(private productoService: ProductoService) {
-    // let categoria = new Categoria();
-    // categoria.nombreCategoria = "Nuevo Producto";
+  public idCategoria: number = 0;
 
-    // this.listaCategoria.push(categoria);
+  public listaProductos: Productos[] = [];
+
+  constructor(private productoService: ProductoService) {
     this.getProducto();
   }
 
   public getProducto(){
-    this.productoService.GetProductos().subscribe({
+    this.productoService.GetProducto().subscribe({
       next: (response: HttpResponse<any>) => {
         this.listaProductos = response.body;
       },
       error: (error: any) => {
         console.log(error);
-      },
-      complete: () => {
-        
       }
-    })
+    });
   }
 
   public addProducto(){
-    this.AddProductoBackend(this.nombre, this.idCategoria);
+    if (this.idCategoria !== undefined) { // Verifica si idCategoria tiene un valor antes de usarlo
+      this.AddProductoBackend(this.nombre, this.idCategoria);
+    } else {
+      console.log("idCategoria no tiene un valor válido.");
+    }
   }
 
-   private AddProductoBackend(nombre:string, idCategoria:number){
+  public AddProductoBackend(nombre: string, idCategoria: number | undefined){
 
-    var productoEntidad = new Producto();
-    productoEntidad.nombre = nombre;
-    productoEntidad.idCategoria = idCategoria;
+    if (idCategoria !== undefined) { // Verifica si idCategoria tiene un valor antes de usarlo
+      var productoEntidad = new Productos();
+      productoEntidad.nombre = nombre;
+      productoEntidad.idCategoria = idCategoria;
     
       this.productoService.AddProducto(productoEntidad).subscribe({
         next: (response: HttpResponse<any>) => {
-            console.log(response.body)//1
-            if(response.body == 1){
-                alert("Se agrego el producto con exito :)");
-                this.getproductoFromBackend();//Se actualize el listado
-                this.nombre = "";
-            }else{
-                alert("Al agregar el producto fallo exito :(");
-            }
+          console.log(response.body);
+          if(response.body == 1){
+            alert("Se agregó el producto con éxito :)");
+            this.getProducto();
+            this.nombre = "";
+          } else {
+            alert("Error al agregar el producto :(");
+          }
         },
         error: (error: any) => {
-            console.log(error);
+          console.log(error);
         },
         complete: () => {
-            console.log('complete - this.AddProductoBackend()');
-        },
-    });
-  }
-  getproductoFromBackend() {
-    throw new Error('Method not implemented.');
+          console.log('complete - this.AddProductoBackend()');
+        }
+      });
+    } else {
+      console.log("idCategoria no tiene un valor válido.");
+    }
   }
 }

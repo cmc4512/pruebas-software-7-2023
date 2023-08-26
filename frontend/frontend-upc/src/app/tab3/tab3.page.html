@@ -14,15 +14,17 @@
   </ion-header>
 
   <ion-item>
-    <ion-input id="nombreProducto" type='text' placeholder='Añadir nombre producto :*' [(ngModel)]="nombre"></ion-input>
-    <ion-input id="idCategoria" type='text' placeholder='Elegir id producto:*' [(ngModel)]="idCategoria"></ion-input>
+    <ion-input id="nombreProducto" type='text' placeholder='Nombre Categoria:*' [(ngModel)]="nombre"></ion-input>
+    <ion-input id="idCategoria" type='text' placeholder='ID categoria:*' [(ngModel)]="idCategoria"></ion-input>
     <ion-button id="addProducto" (click)="addProducto()">Agregar Categoria</ion-button>
   </ion-item>
+  
   <br>
   <ion-list>
     <ion-item *ngFor="let item of listaProductos">
-      <b>nombre</b>:{{item.nombre}}; <b>idCategoria</b>:{{item.idCategoria}}
+      <b>nombreProducto</b>: {{item.nombre}}; <b>idCategoria</b>: {{idCategoria}}
     </ion-item>
   </ion-list>
-
-</ion-content>
+  
+  
+  </ion-content>

@@ -1,15 +1,40 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>tab4</ion-title>
+    <ion-title>Carrito Compra</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">SOY NUEVO</ion-title>
+      <ion-title size="large">Carrito Compra</ion-title>
     </ion-toolbar>
   </ion-header>
+  
+  <!-- Datos de la tabla CARRITO_COMPRA -->
+  <ion-list>
+    <ion-item *ngFor="let carrito of listaCarrito">
+      <b>Fecha</b>: {{ carrito.fecha | date }}, <b>Codigo Usuario</b>: {{ carrito.idUsuario }};
+    </ion-item>
+  </ion-list>
 
-  <app-explore-container name="Tab 4444444444444444 page"></app-explore-container>
+  <ion-header [translucent]="true">
+    <ion-toolbar>
+      <ion-title>Detalle Carrito Compra</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content [fullscreen]="true">
+    <ion-header collapse="condense">
+      <ion-toolbar>
+        <ion-title size="large">Detalle Carrito Compra</ion-title>
+      </ion-toolbar>
+    </ion-header>
+  
+  <!-- Datos de la tabla DETALLE_CARRITO -->
+  <ion-list>
+    <ion-item *ngFor="let detalle of listaDetalleCarrito">
+      <b>Cantidad</b>: {{ detalle.cantidad }}, <b>Codigo Producto</b>: {{ detalle.idProducto }}, <b>Codigo Carrito Compra</b>: {{ detalle.idCarritoCompra }};
+    </ion-item>
+  </ion-list>
 </ion-content>
