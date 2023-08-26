@@ -9,7 +9,7 @@ import { ProductoService } from '../servicios-backend/producto/producto.service'
 })
 export class Tab3Page {
   public nombre = "";
-  public idCategoria: number = 0;
+  public idCategoria: number | undefined;
 
   public listaProductos: Productos[] = [];
 

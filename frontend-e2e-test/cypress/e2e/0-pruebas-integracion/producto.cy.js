@@ -1,30 +1,41 @@
-describe("CRUD Producto", () => {//Titulo
+describe("CRUD Productos", () => {//Titulo
     //Antes que nada, abrir el navegador en el proyecto Frontend que es el puerto 8100
     beforeEach(() => {
-        cy.visit("http://localhost:8100"); //Frontend de Produccion
+        cy.visit("http://localhost:8100/"); //Frontend de Produccion
     });
 
-    //Servicio API - GetProducto()
-    it("GetCategoriaProducto()", () => {
+    //Servicio API - GetUsuarios()
+    it("getProducto()", () => {
         cy.wait(1000);//Esperar 1 seg.
-        cy.get("ion-tab-button").eq(2).click(); // click en el TAB de Producto
+        cy.get("ion-tab-button").eq(0).click(); // click en el TAB de Usuarios
         cy.wait(1000);//Esperar 1 seg.
 
         cy.get("ion-item").should("be.visible")
         .should("not.have.length", "0"); //Verifica que exista al menos un (ion-item)
     });
 
-    //Servicio API - AddCategoriaProducto(entidad)
-    it("AddCategoriaProducto(entidad)", () => {
-        cy.get("ion-tab-button").eq(2).click(); // click en el TAB de Producto
-        cy.wait(1000);//Esperar 1 seg.
+    it("addProducto(entidad)", () => {
+        cy.get("ion-tab-button").eq(2).click(); // Click en el TAB de Usuarios
+        cy.wait(100); // Esperar 1 segundo
 
-        cy.get("#nombre")
-            .type("insertar nombre cypress", { delay: 100 })
-            .should("have.value", "insertar nombre cypress");
+        // // Llenar el campo de Nombre Completo
+        cy.get("#nombreProducto")
+            .type("producto cypress", {  delay: 100  })
+            .should("have.value", "producto cypress");
 
-        cy.wait(500);//Esperar medio seg.
+            cy.wait(500); // Esperar medio segundo
 
-        cy.get("#idCategoria").not("[disabled]").click();
+            let almacenarNumero = 0;
+            const numeroAleatorio = Math.floor(Math.random() * 12) + 1;
+            almacenarNumero = numeroAleatorio;
+            cy.wait(500); // Esperar medio segundo
+            
+            cy.get("#idCategoria")
+            .type(numeroAleatorio.toString(), { delay: 100})
+            .should("have.value", almacenarNumero.toString());
+            cy.wait(500); // Esperar medio segundo
+
+        // Hacer clic en el botón "Agregar Usuario"
+        cy.get("#addProducto").not("[disabled]").click();
     });
 });
