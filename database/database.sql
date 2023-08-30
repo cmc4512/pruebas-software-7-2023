@@ -12,12 +12,16 @@ use upd_database
 USUARIOS
 CATEGORIA_PRODUCTO
 PRODUCTO
+PEDIDO
+ENVIOS
 DETALLE_CARRITO
 CARRITO_COMPRA
 
 DROP TABLE USUARIOS;
 DROP TABLE CATEGORIA_PRODUCTO;
 DROP TABLE PRODUCTO;
+DROP TABLE PEDIDO;
+DROP TABLE ENVIO;
 DROP TABLE DETALLE_CARRITO;
 DROP TABLE CARRITO_COMPRA;
 
@@ -80,8 +84,51 @@ ALTER TABLE PRODUCTO
   ADD CONSTRAINT "FK_PRODUCTO_TO_CATEGORIA_PRODUCTO" 
   FOREIGN KEY(ID_CATEGORIA)
   REFERENCES CATEGORIA_PRODUCTO("ID");
-  
-  
+
+
+  --/////////////////////////PEDIDOS///////////////////////////////////////////
+
+ IF OBJECT_ID('PEDIDO', 'U') IS NOT NULL 
+  DROP TABLE PEDIDO; 
+GO
+
+CREATE TABLE PEDIDO
+(
+  "ID"                          INT IDENTITY(1,1),
+  "ID_USUARIO"                  INT NOT NULL,
+  "ID_ENVIO"                    INT NOT NULL,
+  "FECHA_PEDIDO"                DATETIME NOT NULL,
+  "CANTIDAD"                    INT DEFAULT 1 NOT NULL,
+  "ESTADO"                      VARCHAR(50) NOT NULL,
+  "USUARIO_REGISTRO"            VARCHAR(50) DEFAULT SYSTEM_USER NOT NULL,
+  "FECHA_REGISTRO"              DATETIME DEFAULT getdate() NOT NULL,
+  "ESTADO_REGISTRO"             INT DEFAULT 1 NOT NULL, 
+  CONSTRAINT PEDIDO_PK          PRIMARY KEY (ID),
+  CONSTRAINT FK_PEDIDO__TO_ENVIO    FOREIGN KEY (ID_ENVIO) REFERENCES PEDIDO(ID),
+  CONSTRAINT FK_PEDIDO__TO_USUARIO  FOREIGN KEY (ID_USUARIO) REFERENCES USUARIOS(ID)
+);
+
+
+      --/////////////////////////ENVIO///////////////////////////////////////////
+
+  IF OBJECT_ID('ENVIO', 'U') IS NOT NULL 
+  DROP TABLE ENVIO; 
+GO
+
+CREATE TABLE ENVIO
+(
+  "ID"                          INT IDENTITY(1,1),
+  "NOMBRE_PRODUCTO"             VARCHAR(100) NOT NULL,
+  "DIRECCION"                   VARCHAR(50) NOT NULL,
+  "CANTIDAD"                    VARCHAR(50) NOT NULL,
+  "USUARIO_REGISTRO"            VARCHAR(50) DEFAULT SYSTEM_USER NOT NULL,
+  "FECHA_REGISTRO"              DATETIME DEFAULT getdate() NOT NULL,
+  "ESTADO_REGISTRO"             INT DEFAULT 1 NOT NULL, 
+  CONSTRAINT ENVIO_PK           PRIMARY KEY (ID)
+);
+
+
+
 --/////////////////////////CARRITO_COMPRA///////////////////////////////////////////
 
 IF OBJECT_ID('CARRITO_COMPRA', 'U') IS NOT NULL 
@@ -91,8 +138,8 @@ GO
 CREATE TABLE CARRITO_COMPRA
 (
   "ID"                          INT IDENTITY(1,1),
-  "FECHA"						DATETIME NOT NULL,
-  "ID_USUARIO"					INT NOT NULL,
+  "FECHA"						            DATETIME NOT NULL,
+  "ID_USUARIO"					        INT NOT NULL,
   "USUARIO_REGISTRO"            VARCHAR(50) DEFAULT SYSTEM_USER NOT NULL,
   "FECHA_REGISTRO"              DATETIME DEFAULT getdate() NOT NULL,
   "ESTADO_REGISTRO"				INT DEFAULT 1 NOT NULL, 
@@ -142,6 +189,8 @@ ALTER TABLE DETALLE_CARRITO
 select * from USUARIOS
 select * from CATEGORIA_PRODUCTO
 select * from PRODUCTO
+select * from PEDIDOS
+select * from ENVIOS
 select * from CARRITO_COMPRA
 
 
@@ -214,6 +263,21 @@ INSERT INTO [dbo].[PRODUCTO]([NOMBRE], [ID_CATEGORIA]) VALUES
     ('Producto 81', 1), ('Producto 82', 1), ('Producto 83', 2), ('Producto 84', 2), ('Producto 85', 3), ('Producto 86', 3), ('Producto 87', 4), ('Producto 88', 4),
     ('Producto 89', 5), ('Producto 90', 5), ('Producto 91', 1), ('Producto 92', 1), ('Producto 93', 2), ('Producto 94', 2), ('Producto 95', 3), ('Producto 96', 3),
     ('Producto 97', 4), ('Producto 98', 4), ('Producto 99', 5), ('Producto 100', 5)
+
+
+INSERT INTO [dbo].[ENVIO]([NOMBRE_PRODUCTO], [DIRECCION], [CANTIDAD]) VALUES 
+
+ ('Producto 1', 'Dirección 1', 10), 
+ ('Producto 2', 'Dirección 2', 2),
+ ('Producto 3', 'Dirección 3', 20) 
+
+
+  INSERT INTO [dbo].[PEDIDO]([ID_USUARIO], [ID_ENVIO], [FECHA_PEDIDO], [CANTIDAD], [ESTADO]) VALUES 
+     (1, 1, '2023-08-02',  5, 'FRAGIL'),
+     (2, 2, '2023-08-03',  8, 'DELICADO'),
+     (3, 3, '2023-08-04',  6, 'SOLIDO') 
+
+
 
 
 
