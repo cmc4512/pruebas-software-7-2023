@@ -27,12 +27,12 @@ namespace backend.servicios
 
         public static int InsertPedido(Pedidos pedido)
         {
-            const string sql = "INSERT INTO PEDIDO (ID_USUARIO, ID_ENVIO, FECHA_PRODUCTO, CANTIDAD, ESTADO) VALUES (@idUsuario, @idEnvio, @fechaProducto, @cantidad, @estado)";
+            const string sql = "INSERT INTO PEDIDO (ID_USUARIO, ID_ENVIO, NOMBRE_PEDIDO, CANTIDAD, ESTADO) VALUES (@idUsuario, @idEnvio, @nombrePedido, @cantidad, @estado)";
 
             var parameters = new DynamicParameters();
             parameters.Add("idUsuario", pedido.IdUsuario, DbType.Int32);
             parameters.Add("idEnvio", pedido.IdEnvio, DbType.Int32);
-            parameters.Add("fechaProducto", pedido.FechaProducto, DbType.DateTime);
+            parameters.Add("fechaPedido", pedido.fechaPedido, DbType.DateTime);
             parameters.Add("cantidad", pedido.Cantidad, DbType.Decimal);
             parameters.Add("estado", pedido.Estado, DbType.String);
 
@@ -42,13 +42,13 @@ namespace backend.servicios
 
         public static int UpdatePedido(Pedidos pedido)
         {
-            const string sql = "UPDATE PEDIDO SET ID_USUARIO = @idUusario, ID_ENVIO = @idEnvio, FECHA_PRODUCTO = @fechaProducto, CANTIDAD = @Cantidad, ESTADO = @Estado WHERE ID = @id";
+            const string sql = "UPDATE PEDIDO SET ID_USUARIO = @idUusario, ID_ENVIO = @idEnvio, NOMBRE_PEDIDO = @nombrePedido, CANTIDAD = @Cantidad, ESTADO = @Estado WHERE ID = @id";
 
             var parameters = new DynamicParameters();
             parameters.Add("id", pedido.Id, DbType.Int32);
             parameters.Add("idUsuario", pedido.IdUsuario, DbType.Int32);
             parameters.Add("idEnvio", pedido.IdEnvio, DbType.Int32);
-            parameters.Add("fechaProducto", pedido.FechaProducto, DbType.DateTime);
+            parameters.Add("fechaPedido", pedido.fechaPedido, DbType.DateTime);
             parameters.Add("cantidad", pedido.Cantidad, DbType.Decimal);
             parameters.Add("estado", pedido.Estado, DbType.String);
 

@@ -66,7 +66,7 @@ namespace backend.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPost]
         [Route("UpdatePedido")]
         public IActionResult UpdatePedidos(Pedidos pedido)
         {

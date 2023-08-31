@@ -1,0 +1,41 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Envio
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Envio</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-item>
+    <ion-input id="nombreProducto" type="text" placeholder="Ingrese el Nombre Producto" [(ngModel)]="nombreProducto"></ion-input>
+    <ion-input id="direccion" type="text" placeholder="Ingrese la Direccion" [(ngModel)]="direccion"></ion-input>
+    <ion-input id="cantidad" type="text" placeholder="Ingrese una cantidad" [(ngModel)]="cantidad"></ion-input>
+    <ion-button id="addEnvio" (click)="addEnvio()">Agregar Envio</ion-button>
+  </ion-item>
+
+  <br>
+  <ion-list>
+    <ion-item *ngFor="let envio of listaEnvio">
+      <b>nombreProducto</b>: {{ envio.nombreProducto }}, <b>direccion</b>: {{ envio.direccion }}, <b>cantidad</b>: {{ envio.cantidad }};
+      <ion-button (click)="obtenerId(envio.id)">ID</ion-button>
+      <ion-button (click)="editarEnvio(envio)">Modificar</ion-button>
+      <ion-button (click)="eliminarEnvio(envio.id)">Eliminar</ion-button>
+    </ion-item>
+  </ion-list>
+
+  <ion-item *ngIf="envioSeleccionado">
+    <ion-input id="nombreProducto" type="text" placeholder="nombre del Producto" [(ngModel)]="envioSeleccionado.nombreProducto"></ion-input>
+    <ion-input id="direccion" type="text" placeholder="Direccion" [(ngModel)]="envioSeleccionado.direccion"></ion-input>
+    <ion-input id="cantidad" type="text" placeholder="Cantidad" [(ngModel)]="envioSeleccionado.cantidad"></ion-input>
+    
+    <ion-button id="modificarEnvio" (click)="guardarModificacionEnvio()">Guardar Modificación</ion-button>
+    <ion-button id="cancelarModificacion" (click)="cancelarModificacion()">Cancelar</ion-button>
+  </ion-item>
+</ion-content>

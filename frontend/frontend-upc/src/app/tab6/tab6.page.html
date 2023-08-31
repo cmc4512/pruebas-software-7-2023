@@ -1,0 +1,45 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Pedidos
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Pedidos</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-item>
+    <ion-input id="idUsuario" type="number" placeholder="ID Usuario" [(ngModel)]="idUsuario"></ion-input>
+    <ion-input id="idEnvio" type="number" placeholder="ID Envio" [(ngModel)]="idEnvio"></ion-input>
+    <ion-input id="fechaPedido" type="date" placeholder="Fecha de Pedido" [(ngModel)]="fechaPedido"></ion-input>
+    <ion-input id="estado" type="text" placeholder="estado" [(ngModel)]="estado"></ion-input>
+    <ion-input id="cantidad" type="text" placeholder="cantidad" [(ngModel)]="cantidad"></ion-input>
+    <ion-button id="addPedidos" (click)="addPedidos()">Agregar Pedidos</ion-button>
+  </ion-item>
+  <br>
+  <ion-list>
+    <ion-item *ngFor="let pedidos of listaPedidos">
+      <b>ID Usuario</b>: {{ pedidos.idUsuario }}, <b>ID Envio</b>: {{ pedidos.idEnvio }}, <b>Fecha de Pedido</b>: {{ pedidos.fechaPedido | date }}, <b>Estado</b>: {{ pedidos.estado| currency }}, <b>Cantidad</b>: {{ pedidos.cantidad }};
+      <ion-button (click)="obtenerPedidosPorId(pedidos.id)">Obtener por ID</ion-button>
+      <ion-button (click)="editarPedidos(pedidos)">Modificar</ion-button>
+      <ion-button (click)="eliminarPedidos(pedidos.idEnvio)">Eliminar</ion-button>
+    </ion-item>
+  </ion-list>
+  <ion-item *ngIf="pedidosSeleccionado">
+    <ion-input id="idUsuario" type="number" placeholder="ID Usuario" [(ngModel)]="pedidosSeleccionado.idUsuario"></ion-input>
+    <ion-input id="idEnvio" type="number" placeholder="ID Envio" [(ngModel)]="pedidosSeleccionado.idEnvio"></ion-input>
+    <ion-input id="fechaPedido" type="text" placeholder="Fecha de Pedido" [(ngModel)]="pedidosSeleccionado.fechaPedido"></ion-input>
+    <ion-input id="estado" type="text" placeholder="Estado" [(ngModel)]="pedidosSeleccionado.estado"></ion-input>
+    <ion-input id="cantidad" type="text" placeholder="cantidad" [(ngModel)]="pedidosSeleccionado.cantidad"></ion-input>
+   
+    
+    <ion-button id="modificarPedidos" (click)="guardarModificacionPedidos()">Guardar Modificación</ion-button>
+    <ion-button id="cancelarModificacion" (click)="cancelarModificacion()">Cancelar</ion-button>
+    <ion-button id="eliminarPedidos" (click)="eliminarPedidos(pedidosSeleccionado!.idEnvio)">Eliminar Pedidos</ion-button>
+  </ion-item>
+</ion-content>

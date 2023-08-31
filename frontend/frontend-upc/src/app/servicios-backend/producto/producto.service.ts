@@ -32,7 +32,6 @@ export class ProductoService {
       .pipe();
   }
 
-
   public GetCategoriaProducto(): Observable<HttpResponse<any>> {
     return this.httpClient
       .get<any>(this.URL_GET_CATEGORIA,
